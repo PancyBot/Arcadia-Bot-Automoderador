@@ -1,0 +1,27 @@
+{
+  "name": "arcadia-bot-automoderador",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArcadiaRolePlay/Arcadia-Bot-Automoderador.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArcadiaRolePlay/Arcadia-Bot-Automoderador/issues"
+  },
+  "homepage": "https://github.com/ArcadiaRolePlay/Arcadia-Bot-Automoderador#readme",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "discord.js": "^14.0.0-dev.1640865766.780b7ed",
+    "dotenv": "^10.0.0",
+    "glob": "^7.2.0",
+    "mongoose": "^6.1.4",
+    "vtapi_v3": "^2.0.1"
+  }
+}
