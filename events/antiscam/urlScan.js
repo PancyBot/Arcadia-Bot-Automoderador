@@ -145,6 +145,46 @@ module.exports = {
 
             })
 
+        } else if(message.content.includes("http://")) {
+            const messagetext = message.content;
+            const regex = /(https+["://"]+([a-zA-Z0-9-]+\.com))/gm
+            const dominianregex = messagetext.match(regex)
+            if(!dominianregex[0]) return;
+            const dominian = dominianregex[0].replace('http://', '')
+            console.log(dominian)
+            console.log('0.2')
+            await fetch(`${scanDomain}/${dominian}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json', 'x-apikey': process.env.API }
+            }).then(res => res.json()).then(async json => {
+                console.log(json.data.attributes.last_analysis_stats)
+                console.log(json.data.attributes.last_analysis_results)
+                if(!json.data.attributes.last_analysis_stats) return;
+                const malucious = json.nodedata.attributes.last_analysis_stats.malicious;
+                const suspicious = json.data.attributes.last_analysis_stats.suspicious;
+                if(malucious || suspicious) {
+                    message.delete()
+                    const author = message.author
+                    const { guild } = message
+                    const EmbedBan = new MessageEmbed()
+                    .setTitle('Usuario baneado')
+                    .addField('Moderador', client.user.tag)
+                    .addField('Usuario', author.tag)
+                    .addField('Razón', 'Publicar links maliciosos')
+                    .setTimestamp()
+
+                    await guild.members.cache.get(author.id).ban({ reason: 'Publicar links maliciosos' }).catch(err => {
+                        console.log(err)
+                        return;   
+                    })
+                    await author.send({ embeds: [EmbedBan.addField('Link para apelar:', '[Formulario](https://forms.gle/jQbJLPHSNopsZmXz5)')] }).catch(err => console.log(err))
+                    await client.channels.cache.get('834149620937523240').send({ embeds: [EmbedBan] })
+                    await guild.members.cache.get(author.id).ban({ reason: 'Publicar links maliciosos' })
+
+                }
+
+            })
+
         }
 
     }
